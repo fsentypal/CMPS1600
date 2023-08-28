@@ -16,7 +16,7 @@ public class MainClass {
 		System.out.println("Bye");
 		}
 		catch(Exception e) {
-			System.out.println("HI");
+			System.out.println("Hello");
 			System.out.println(e.getMessage());
 			System.out.println(e.getStackTrace());
 		}
