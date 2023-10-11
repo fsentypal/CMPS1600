@@ -3,7 +3,7 @@ import com.storygraph.*;
 public class MainClass {
 	public static void main(String[] args) {
 		try {
-		System.out.println("Hello");
+		System.out.println("Kevin");
 		var story = new SampleStory();
 		var graph = new Graph();
 		var currentNode = story.getRoot();
