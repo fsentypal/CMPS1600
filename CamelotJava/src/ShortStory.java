@@ -1,71 +1,101 @@
+import com.storygraph.*;
+import java.util.ArrayList;
+import java.util.Optional;
+import com.entities.Character;
+import com.entities.Place;
+import com.entities.Things.ThingNames;
+import com.playerInput.IPlayerChoice;
+import com.entities.Item;
+
+
+// ShortStory class that implements IStory
 public class ShortStory implements IStory {
+	public interface IStory {
+	    ActionMap getMap();
+	    INode getRoot();
+	    void getThings();
+	}
 
-    // Items
-    Item bread;
-    Item sword;
-    Item scroll;
+    // Declaring characters
+    public Character knight1, knight2, queen, king, witch, bandit;
+    
+    // Declaring items
+    public Item bread, coin, greenPotion, openScroll, sword;
+    
+    // Declaring places
+    public Place farm, spookyPath, forestPath, tavern, courtyard, city, castleBedroom, diningRoom, dungeon, ruins;
 
-    // Places
-    Place castleBedroom;
-    Place city;
-    Place courtyard;
-    Place dungeon;
-    Place diningRoom;
-    Place forestPath;
-    Place greatHall;
-    Place ruins;
-    Place spookyPath;
-    Place tavern;
-
-    // Characters
-    Character knight1;
-    Character knight2;
-    Character queen;
-    Character king;
-    Character bandit;
-    Character witch;
-
+    // Constructor
     public ShortStory() {
         getThings();
     }
 
     @Override
     public ActionMap getMap() {
-        // Placeholder implementation
-        return null;
+        return null; // Placeholder
     }
 
     @Override
     public INode getRoot() {
-        // Placeholder implementation as per your instruction
         return new Node("root");
     }
 
     @Override
     public void getThings() {
-        // Instantiating items
-        bread = new Item(ThingNames.Bread, Items.Bread);
-        sword = new Item(ThingNames.Sword, Items.Sword);
-        scroll = new Item(ThingNames.Scroll, Items.Scroll);
-
-        // Instantiating places
-        castleBedroom = new Place(ThingNames.CastleBedroom, Places.CastleBedroom);
-        city = new Place(ThingNames.City, Places.City);
-        courtyard = new Place(ThingNames.Courtyard, Places.Courtyard);
-        dungeon = new Place(ThingNames.Dungeon, Places.Dungeon);
-        diningRoom = new Place(ThingNames.DiningRoom, Places.DiningRoom);
-        forestPath = new Place(ThingNames.ForestPath, Places.ForestPath);
-        greatHall = new Place(ThingNames.GreatHall, Places.GreatHall);
-        ruins = new Place(ThingNames.Ruins, Places.Ruins);
-        spookyPath = new Place(ThingNames.SpookyPath, Places.SpookyPath);
-        tavern = new Place(ThingNames.Tavern, Places.Tavern);
-
         // Instantiating characters
         knight1 = new Character(ThingNames.Knight1);
         knight2 = new Character(ThingNames.Knight2);
         queen = new Character(ThingNames.Queen);
         king = new Character(ThingNames.King);
-        bandit = new Character(ThingNames.Bandit);
         witch = new Character(ThingNames.Witch);
+        bandit = new Character(ThingNames.Bandit);
+
+        // Instantiating items
+        bread = new Item(ThingNames.Bread, Item.Items.Bread);
+        coin = new Item(ThingNames.Coin, Items.Coin);
+        greenPotion = new Item(ThingNames.GreenPotion, Items.GreenPotion);
+        openScroll = new Item(ThingNames.OpenScroll, Items.OpenScroll);
+        sword = new Item(ThingNames.Sword, Items.Sword);
+
+        // Instantiating places
+        farm = new Place(ThingNames.Farm, Places.Farm);
+        spookyPath = new Place(ThingNames.SpookyPath, Places.SpookyPath);
+        forestPath = new Place(ThingNames.ForestPath, Places.ForestPath);
+        tavern = new Place(ThingNames.Tavern, Places.Tavern);
+        courtyard = new Place(ThingNames.Courtyard, Places.Courtyard);
+        city = new Place(ThingNames.City, Places.City);
+        castleBedroom = new Place(ThingNames.CastleBedroom, Places.CastleBedroom);
+        diningRoom = new Place(ThingNames.DiningRoom, Places.DiningRoom);
+        dungeon = new Place(ThingNames.Dungeon, Places.Dungeon);
+        ruins = new Place(ThingNames.Ruins, Places.Ruins);
     }
+}
+
+class Node implements INode {
+    private String name;
+
+    public Node(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getLabel() {
+        return name;
+    }
+
+    @Override
+    public INode getNextNode(Optional<IPlayerChoice> edge) {
+        // Placeholder
+        return null;
+    }
+
+    @Override
+    public Optional<ArrayList<IPlayerChoice>> getOutgoingEdges() {
+        // Placeholder
+        return Optional.empty();
+    }
+}
+
+class ActionMap {
+    // Placeholder for methods and attributes of the ActionMap class
 }
