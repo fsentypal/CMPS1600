@@ -1,6 +1,9 @@
 import com.storygraph.*;
+
 import java.util.ArrayList;
 import java.util.Optional;
+
+import com.actions.ActionSequence;
 import com.entities.Character;
 import com.entities.Place;
 import com.entities.Things.ThingNames;
@@ -98,4 +101,109 @@ class Node implements INode {
 
 class ActionMap {
     // Placeholder for methods and attributes of the ActionMap class
+}
+
+private ActionSequence getInitSequence() {
+	
+}
+
+private ActionSequence getStarSequence() {
+	
+}
+private ActionSequence getSpawnFarmSequence() {
+	
+}
+private ActionSequence getDyingKnightHelpSequence() {
+	
+}
+private ActionSequence getKnightDiesSequence() {
+	
+}
+private ActionSequence getOnPathWithItemsSequence() {
+	
+}
+private ActionSequence getGreatHallQueenSequence() {
+	
+}
+private ActionSequence getKnightSurvivesSequence() {
+	
+}
+private ActionSequence getArriveCitySequence() {
+	
+}
+private ActionSequence getKnightTavernSequence() {
+	
+}
+private ActionSequence getKnightGivesItemsSequence() {
+	
+}
+private ActionSequence getArriveCourtardSequence() {
+	
+}
+private ActionSequence getWitchQuestSequence() {
+	
+}
+private ActionSequence getKnight2ProofSequence() {
+	
+}
+private ActionSequence getKnight2LetsYouGoSequence() {
+	
+}
+private ActionSequence getKnight2EscapeSequence() {
+	
+}
+private ActionSequence getKnight2BattleSequence() {
+	
+}
+private ActionSequence getObtainProof2Sequence() {
+	
+}
+private ActionSequence getSpookyPathSequence() {
+	
+}
+private ActionSequence getBanditQuestionsSequence() {
+	
+}
+private ActionSequence getBanditLovePotionSequence() {
+	
+}
+private ActionSequence getBanditRunsAwaySequence() {
+	
+}
+private ActionSequence getBanditGivesRingSequence() {
+	
+}
+private ActionSequence getWitchRiddleSequence() {
+	
+}
+private ActionSequence getWitchDiesSequence() {
+	
+}
+private ActionSequence getReturnCourtyardSequence() {
+	
+}
+private ActionSequence getKingdomCongratsSequence() {
+	
+}
+private ActionSequence getQueenLoveSequence() {
+	
+}
+private ActionSequence getHappilyEverAfterSequence() {
+	
+}
+private ActionSequence getQueenTellsYouLeaveSequence() {
+	
+}
+private ActionSequence getKingProofSequence() {
+	
+}
+private ActionSequence getHeadKnightSequence() {
+	
+}
+private ActionSequence getDungeonSequence() {
+	
+}
+private ActionSequence getNowPeasantSequence() {
+	
+}
 }
