@@ -72,36 +72,6 @@ public class ShortStory implements IStory {
         dungeon = new Place(ThingNames.Dungeon, Places.Dungeon);
         ruins = new Place(ThingNames.Ruins, Places.Ruins);
     }
-}
-
-class Node implements INode {
-    private String name;
-
-    public Node(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getLabel() {
-        return name;
-    }
-
-    @Override
-    public INode getNextNode(Optional<IPlayerChoice> edge) {
-        // Placeholder
-        return null;
-    }
-
-    @Override
-    public Optional<ArrayList<IPlayerChoice>> getOutgoingEdges() {
-        // Placeholder
-        return Optional.empty();
-    }
-}
-
-class ActionMap {
-    // Placeholder for methods and attributes of the ActionMap class
-}
 
 private ActionSequence getInitSequence() {
 	var sequence = new ActionSequence();
@@ -112,42 +82,48 @@ private ActionSequence getInitSequence() {
 	sequence.add(new Position(bread, farm, "Shelf"));
 	sequence.add(new SetCameraFocus(player));
 	sequence.add(new Take(player, bread));
-	sequence.add(new AddToList(Bread));
+	sequence.add(new AddToList(bread));
 	sequence.add(new ShowMenu(true));
 	sequence.add(new EnableInput(true));
 	return sequence;
 }
 private ActionSequence getDyingKnightHelpSequence() {
 	var sequence = new ActionSequence();
-	sequence.combineWith(new CharacterCreation(knight));
+	sequence.combineWith(new CharacterCreation(knight1));
 	sequence.add(new Create<Place>(forestPath));
-	sequence.add(new Position(knight, forestPath));
+	sequence.add(new Position(knight1, forestPath));
 	sequence.add(new Position(player, forestPath));
 	sequence.add(new Create<Item>(sword));
-	sequence.add(new Create<Item>(openScroll))
+	sequence.add(new Create<Item>(openScroll));
 	sequence.add(new SetDialog("Help! I don't have much life left in me, please spare me that bread you have..."));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 	
 }
 private ActionSequence getKnightDiesSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new Die(knight));
+	sequence.add(new Die(knight1));
 	return sequence;
 }
 private ActionSequence getOnPathWithItemsSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new Take(player, sword));
 	sequence.add(new Take(player, armor));
-	sequence.add(new AddToList(Sword));
-	sequence.add(new AddToList(Armor));
+	sequence.add(new AddToList(sword));
+	sequence.add(new AddToList(armor));
 	return sequence;
 }
 private ActionSequence getKnightSurvivesSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new Give(player, bread, knight));
+	sequence.add(new Give(player, bread, knight1));
 	sequence.add(new RemoveFromList(Bread));
 	sequence.add(new SetDialog("Thank you, meet me at the tavern for a little treat ;)"));
-	sequence.add(new Exit(knight, ForestPath.WestEnd));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
+	sequence.add(new Exit(knight1, ForestPath.WestEnd));
 	return sequence;	
 }
 private ActionSequence getArriveCitySequence() {
@@ -162,15 +138,18 @@ private ActionSequence getKnightTavernSequence() {
 	sequence.add(new Position(knight, Tavern));
 	sequence.add(new Position(player, Tavern));
 	sequence.add(new SetDialog("this is the knight quest"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 	
 }
 private ActionSequence getKnightGivesItemsSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new Give(knight, armor, player));
-	sequence.add(new Give(knight, sword, player));
-	sequence.add(new Give(knight, greenPotion, player));
-	sequence.add(new Give(knight, openScroll, player));
+	sequence.add(new Give(knight1, armor, player));
+	sequence.add(new Give(knight1, sword, player));
+	sequence.add(new Give(knight1, greenPotion, player));
+	sequence.add(new Give(knight1, openScroll, player));
 	sequence.add(new AddToList(Sword));
 	sequence.add(new AddToList(Armor));
 	sequence.add(new AddToList(greenPotion));
@@ -192,6 +171,9 @@ private ActionSequence getWitchQuestSequence() {
 	sequence.add(new Position(player, greatHall));
 	sequence.add(new Position(Queen, greatHall));
 	sequence.add(new SetDialog("there is a witch you should fight them"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 	
 }
@@ -199,6 +181,9 @@ private ActionSequence getKnight2ProofSequence() {
 	var sequence = new ActionSequence();
 	sequence.add((new Postion(player, courtyard)));
 	sequence.add(new SetDialog("You aren't a knight! Show me proof!"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getKnight2LetsYouGoSequence() {
@@ -206,6 +191,9 @@ private ActionSequence getKnight2LetsYouGoSequence() {
 	sequence.add(new Give(player, openScroll, knight2));
 	sequence.add(new RemoveFromList(openScroll));
 	sequence.add(new SetDialog("Oh you are a knight... carry on"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getKnight2EscapeSequence() {
@@ -238,6 +226,9 @@ private ActionSequence getBanditQuestionsSequence() {
 	sequence.add(new Position(bandit, spookyPath));
 	sequence.add(new Position(player, spookyPath));
 	sequence.add(new SetDialog("I AM BANDIT I THREATEN"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getBanditLovePotionSequence() {
@@ -245,6 +236,9 @@ private ActionSequence getBanditLovePotionSequence() {
 	sequence.add(new Give(player, greenPotion, bandit));
 	sequence.add(new RemoveFromList(greenPotion));
 	sequence.add(new SetDialog("Woah I love you now that was a love potion"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new Give(bandit, ring, player));
 	sequence.add(new AddToList(ring));
 	return sequence;
@@ -267,6 +261,9 @@ private ActionSequence getWitchRiddleSequence() {
 	sequence.add(new Position(wtich, ruins));
 	sequence.add(new Position(player, ruins));
 	sequence.add(new SetDialog("I am witch I challenge you with riddle"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 
 	return sequence;
 	
@@ -274,6 +271,9 @@ private ActionSequence getWitchRiddleSequence() {
 private ActionSequence getWitchDiesSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new SetDialog("Noooo I die now"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new Die(witch));
 	
 	return sequence;
@@ -282,6 +282,9 @@ private ActionSequence getWitchDiesSequence() {
 private ActionSequence getYouDieSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new SetDialog("Wrong answer, i win, you die"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new Die(player));
 }
 
@@ -297,6 +300,9 @@ private ActionSequence getKingdomCongratsSequence() {
 	sequence.add(new Position(King, greatHall));
 	sequence.add(new Position(player, greatHall));
 	sequence.add(new SetDialog("Congrats for killing the witch, who do you want to talk to?"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getQueenLoveSequence() {
@@ -305,6 +311,9 @@ private ActionSequence getQueenLoveSequence() {
 	sequence.add(new Position(Queen, castleBedroom));
 	sequence.add(new Position(player, castleBedroom));
 	sequence.add(new SetDialog("I always loved you"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getHappilyEverAfterSequence() {
@@ -312,24 +321,39 @@ private ActionSequence getHappilyEverAfterSequence() {
 	sequence.add(new Give(player, ring, Queen));
 	sequence.add(new RemoveFromList(Ring));
 	sequence.add(new SetDialog("You won! Happily Ever After"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new FadeOut());
 	return sequence;
 }
 private ActionSequence getQueenTellsYouLeaveSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new SetDialog("I don't love you, sorry"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new SetDialog("Okay, go to the king"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new Exit(player, castleBedroom.Door));
 	sequence.add(new Position(king, greatHall));
 	sequence.add(new Position(player, greatHall));
 	sequence.add(new SetDialog("Will you show me your knight proof"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getKingProofSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new Position(king, greatHall));
+	sequence.add(new Position(king, GreatHall));
 	sequence.add(new Position(player, greatHall));
 	sequence.add(new SetDialog("Will you show me your knight proof"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getHeadKnightSequence() {
@@ -337,7 +361,13 @@ private ActionSequence getHeadKnightSequence() {
 	sequence.add(new Give(player, openScroll, king));
 	sequence.add(new RemoveFromList(OpenScroll));
 	sequence.add(new SetDialog("You are a knight! I am promoting you to head knight"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new SetDialog("You got the second best option! Semi-Happily Ever After"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new FadeOut());
 	return sequence;
 }
@@ -346,10 +376,16 @@ private ActionSequence getDungeonSequence() {
 	sequence.add(new Give(player, scroll, king));
 	sequence.add(new RemoveFromList(Scroll));
 	sequence.add(new SetDialog("Imposter! Murderer! This is not you!"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new Exit(player, greatHall.BasementDoor));
 	sequence.add(new Create<Place>(Dungeon));
 	sequence.add(new Postion(player, Dungeon));
 	sequence.add(new SetDialog("You got the worst option! Sadly Ever After"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new FadeOut());
 	return sequence;
 	
@@ -357,11 +393,20 @@ private ActionSequence getDungeonSequence() {
 private ActionSequence getNowPeasantSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new SetDialog("I'm the first knight"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new SetDialog("No you're not, and it seems you don't have proof. We're taking your stuff but you can keep the gold from your journey."));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new Create<Item>(coin));
 	sequence.add(new Give(king, coin, player));
 	sequence.add(new AddToList(Coin));
 	sequence.add(new SetDialog("You got the second-worst option! Mediocrely Ever After"));
+	sequence.add(new ShowDialog());
+	sequence.add(new Wait(3));
+	sequence.add(new HideDialog());
 	sequence.add(new FadeOut());
 	return sequence;
 }
@@ -441,6 +486,5 @@ private ActionMap getMap() {
     map.add(NodeLabels.NowPeasant.ToString(), getNowPeasantSequence());
 
     return map;
-}
-
+	}
 }
