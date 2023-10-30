@@ -17,11 +17,6 @@ import com.entities.Item;
 
 // ShortStory class that implements IStory
 public class ShortStory implements IStory {
-	public interface IStory {
-	    ActionMap getMap();
-	    INode getRoot();
-	    void getThings();
-	}
 
     // Declaring characters
     public Character knight1, knight2, queen, king, witch, bandit, player;
@@ -45,32 +40,32 @@ public class ShortStory implements IStory {
     @Override
     public void getThings() {
         // Instantiating characters
-    	player = new Character(ThingNames.Player)
-        knight1 = new Character(ThingNames.Knight1);
-        knight2 = new Character(ThingNames.Knight2);
-        queen = new Character(ThingNames.Queen);
-        king = new Character(ThingNames.King);
-        witch = new Character(ThingNames.Witch);
-        bandit = new Character(ThingNames.Bandit);
+    	player = new Character(ThingNames.Player.toString(), Character.BodyType.D, Character.Clothing.Peasant);
+        knight1 = new Character(ThingNames.Knight1.toString(), Character.BodyType.D, Character.Clothing.HeavyArmour);
+        knight2 = new Character(ThingNames.Knight2.toString(), Character.BodyType.A, Character.Clothing.LightArmour);
+        queen = new Character(ThingNames.Queen.toString(), Character.BodyType.A, Character.Clothing.Queen);
+        king = new Character(ThingNames.King.toString(), Character.BodyType.H, Character.Clothing.King);
+        witch = new Character(ThingNames.Witch.toString(), Character.BodyType.B, Character.Clothing.Witch);
+        bandit = new Character(ThingNames.Bandit.toString(), Character.BodyType.B, Character.Clothing.Bandit);
 
         // Instantiating items
-        bread = new Item(ThingNames.Bread, Item.Items.Bread);
-        coin = new Item(ThingNames.Coin, Items.Coin);
-        greenPotion = new Item(ThingNames.GreenPotion, Items.GreenPotion);
-        openScroll = new Item(ThingNames.OpenScroll, Items.OpenScroll);
-        sword = new Item(ThingNames.Sword, Items.Sword);
+        bread = new Item(ThingNames.Bread.toString(), Item.Items.Bread);
+        coin = new Item(ThingNames.Coin.toString(), Item.Items.Coin);
+        greenPotion = new Item(ThingNames.GreenPotion.toString(), Item.Items.GreenPotion);
+        openScroll = new Item(ThingNames.OpenScroll.toString(), Item.Items.OpenScroll);
+        sword = new Item(ThingNames.Sword.toString(), Item.Items.Sword);
 
         // Instantiating places
-        farm = new Place(ThingNames.Farm, Places.Farm);
-        spookyPath = new Place(ThingNames.SpookyPath, Places.SpookyPath);
-        forestPath = new Place(ThingNames.ForestPath, Places.ForestPath);
-        tavern = new Place(ThingNames.Tavern, Places.Tavern);
-        courtyard = new Place(ThingNames.Courtyard, Places.Courtyard);
-        city = new Place(ThingNames.City, Places.City);
-        castleBedroom = new Place(ThingNames.CastleBedroom, Places.CastleBedroom);
-        diningRoom = new Place(ThingNames.DiningRoom, Places.DiningRoom);
-        dungeon = new Place(ThingNames.Dungeon, Places.Dungeon);
-        ruins = new Place(ThingNames.Ruins, Places.Ruins);
+        farm = new Place(ThingNames.Farm.toString(), Place.Places.Farm);
+        spookyPath = new Place(ThingNames.SpookyPath.toString(), Place.Places.SpookyPath);
+        forestPath = new Place(ThingNames.ForestPath.toString(), Place.Places.ForestPath);
+        tavern = new Place(ThingNames.Tavern.toString(), Place.Places.Tavern);
+        courtyard = new Place(ThingNames.Courtyard.toString(), Place.Places.Courtyard);
+        city = new Place(ThingNames.City.toString(), Place.Places.City);
+        castleBedroom = new Place(ThingNames.CastleBedroom.toString(), Place.Places.CastleBedroom);
+        diningRoom = new Place(ThingNames.DiningRoom.toString(), Place.Places.DiningRoom);
+        dungeon = new Place(ThingNames.Dungeon.toString(), Place.Places.Dungeon);
+        ruins = new Place(ThingNames.Ruins.toString(), Place.Places.Ruins);
     }
 
 private ActionSequence getInitSequence() {

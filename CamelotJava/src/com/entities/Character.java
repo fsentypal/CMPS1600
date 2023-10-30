@@ -48,7 +48,10 @@ public class Character implements IEntity, IThing<Character.BodyType> {
 		Noble,
 		Naked,
 		Peasant,
-		Priest
+		Priest,
+		Witch, 
+		Queen, 
+		King
 	}
 	
 	public enum HairStyles {
