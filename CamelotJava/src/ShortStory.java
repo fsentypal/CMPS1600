@@ -6,7 +6,6 @@ import com.storygraph.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.actions.ActionSequence;
 import com.entities.Character;
 import com.entities.Place;
 import com.entities.Things.ThingNames;
@@ -79,6 +78,7 @@ private ActionSequence getInitSequence() {
 	sequence.add(new Take(player, bread));
 	sequence.add(new AddToList(bread));
 	sequence.add(new ShowMenu(true));
+	sequence.add(new ShowMenu(false));
 	sequence.add(new EnableInput(true));
 	return sequence;
 }
@@ -91,6 +91,8 @@ private ActionSequence getDyingKnightHelpSequence() {
 	sequence.add(new Create<Item>(sword));
 	sequence.add(new Create<Item>(openScroll));
 	sequence.add(new SetDialog("Help I dont have much life left in me please spare me that bread you have"));
+	sequence.add(new SetDialog("Give [Give the knight your last piece of bread]"));
+	sequence.add(new SetDialog("Reject [Reject the knight's request]"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(5));
 	sequence.add(new HideDialog());
