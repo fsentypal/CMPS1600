@@ -1,32 +1,21 @@
-import com.playerInput.*;
 import com.actions.*;
-import com.sequences.*;
 import com.storygraph.*;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 import com.entities.Character;
 import com.entities.Place;
 import com.entities.Things.ThingNames;
-import com.playerInput.IPlayerChoice;
 import com.sequences.CharacterCreation;
 import com.entities.Item;
 
 
-// ShortStory class that implements IStory
 public class ShortStory implements IStory {
 
-    // Declaring characters
     public Character knight1, knight2, queen, king, witch, bandit, player;
     
-    // Declaring items
     public Item bread, coin, greenPotion, openScroll, sword, armor, scroll, ring, rock;
     
-    // Declaring places
     public Place farm, spookyPath, forestPath, tavern, courtyard, city, castleBedroom, diningRoom, dungeon, ruins, greatHall;
 
-    // Constructor
     public ShortStory() {
         getThings();
     }
@@ -38,7 +27,6 @@ public class ShortStory implements IStory {
 
     @Override
     public void getThings() {
-        // Instantiating characters
     	player = new Character(ThingNames.Player.toString(), Character.BodyType.D, Character.Clothing.Peasant);
         knight1 = new Character(ThingNames.Knight1.toString(), Character.BodyType.D, Character.Clothing.HeavyArmour);
         knight2 = new Character(ThingNames.Knight2.toString(), Character.BodyType.A, Character.Clothing.LightArmour);
@@ -47,14 +35,12 @@ public class ShortStory implements IStory {
         witch = new Character(ThingNames.Witch.toString(), Character.BodyType.B, Character.Clothing.Witch);
         bandit = new Character(ThingNames.Bandit.toString(), Character.BodyType.B, Character.Clothing.Bandit);
 
-        // Instantiating items
         bread = new Item(ThingNames.Bread.toString(), Item.Items.Bread);
         coin = new Item(ThingNames.Coin.toString(), Item.Items.Coin);
         greenPotion = new Item(ThingNames.GreenPotion.toString(), Item.Items.GreenPotion);
         openScroll = new Item(ThingNames.OpenScroll.toString(), Item.Items.OpenScroll);
         sword = new Item(ThingNames.Sword.toString(), Item.Items.Sword);
 
-        // Instantiating places
         farm = new Place(ThingNames.Farm.toString(), Place.Places.Farm);
         spookyPath = new Place(ThingNames.SpookyPath.toString(), Place.Places.SpookyPath);
         forestPath = new Place(ThingNames.ForestPath.toString(), Place.Places.ForestPath);
@@ -120,7 +106,7 @@ private ActionSequence getKnightSurvivesSequence() {
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(3));
 	sequence.add(new HideDialog());
-	sequence.add(new Exit(knight1, ForestPath.WestEnd));
+	sequence.add(new Exit(knight1, forestPath.getFurniture("WestEnd"), true));
 	return sequence;	
 }
 private ActionSequence getArriveCitySequence() {
@@ -131,9 +117,9 @@ private ActionSequence getArriveCitySequence() {
 }
 private ActionSequence getKnightTavernSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new Create<Place>(Tavern));
-	sequence.add(new Position(knight1, Tavern));
-	sequence.add(new Position(player, Tavern));
+	sequence.add(new Create<Place>(tavern));
+	sequence.add(new Position(knight1, tavern));
+	sequence.add(new Position(player, tavern));
 	sequence.add(new SetDialog("this is the knight quest"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(2));
@@ -176,7 +162,7 @@ private ActionSequence getWitchQuestSequence() {
 }
 private ActionSequence getKnight2ProofSequence() {
 	var sequence = new ActionSequence();
-	sequence.add((new Postion(player, courtyard)));
+	sequence.add(new Position(player, courtyard));
 	sequence.add(new SetDialog("You arent a knight Show me proof"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(3));
@@ -195,12 +181,12 @@ private ActionSequence getKnight2LetsYouGoSequence() {
 }
 private ActionSequence getKnight2EscapeSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new Exit(player, courtyard.Exit));
+	sequence.add(new Exit(player, courtyard.getFurniture("Exit"), true));
 	return sequence;
 }
 private ActionSequence getKnight2BattleSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new Attack(player, knight2));
+	sequence.add(new Attack(player, knight2, true));
 	sequence.add(new Die(knight2));
 	return sequence;
 }
@@ -245,9 +231,9 @@ private ActionSequence getBanditRunsAwaySequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new Create<Item>(rock));
 	sequence.add(new AddToList(rock));
-	sequence.add(new Attack(player, bandit));
+	sequence.add(new Attack(player, bandit, true));
 	sequence.add(new RemoveFromList(rock));
-	sequence.add(new Exit(bandit, SpookyPath.EastEnd));
+	sequence.add(new Exit(bandit, spookyPath.getFurniture("EastEnd"), true));
 	return sequence;
 	
 }
@@ -283,6 +269,8 @@ private ActionSequence getYouDieSequence() {
 	sequence.add(new Wait(2));
 	sequence.add(new HideDialog());
 	sequence.add(new Die(player));
+	
+	return sequence;
 }
 
 private ActionSequence getReturnCourtyardSequence() {
@@ -334,7 +322,7 @@ private ActionSequence getQueenTellsYouLeaveSequence() {
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(2));
 	sequence.add(new HideDialog());
-	sequence.add(new Exit(player, castleBedroom.Door));
+	sequence.add(new Exit(player, castleBedroom.getFurniture("Door"), true));
 	sequence.add(new Position(king, greatHall));
 	sequence.add(new Position(player, greatHall));
 	sequence.add(new SetDialog("Will you show me your knight proof"));
@@ -376,9 +364,9 @@ private ActionSequence getDungeonSequence() {
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(3));
 	sequence.add(new HideDialog());
-	sequence.add(new Exit(player, greatHall.BasementDoor));
+	sequence.add(new Exit(player, greatHall.getFurniture("BasementDoor"), true));
 	sequence.add(new Create<Place>(dungeon));
-	sequence.add(new Postion(player, dungeon));
+	sequence.add(new Position(player, dungeon));
 	sequence.add(new SetDialog("You got the worst option Sadly Ever After"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(5));
@@ -408,7 +396,7 @@ private ActionSequence getNowPeasantSequence() {
 	return sequence;
 }
 
-enum NodeLabels
+private enum NodeLabels
 {
     Init,
     DyingKnightHelp,
@@ -419,7 +407,6 @@ enum NodeLabels
     ArriveCity,
     KnightTavern,
     KnightGivesItems,
-    ArriveCouryard,
     WitchQuest,
     Knight2Proof,
     Knight2LetsYouGo,
@@ -442,45 +429,45 @@ enum NodeLabels
     KingProof,
     HeadKnight,
     Dungeon,
-    NowPeasant
+    NowPeasant, 
+    ArriveCourtyard
 }
 
-private ActionMap getMap() {
+@Override
+public ActionMap getMap() {
     var map = new ActionMap();
 
-    map.add(NodeLabels.Init.ToString(), getInitSequence());
-    map.add(NodeLabels.DyingKnightHelp.ToString(), getDyingKnightHelpSequence());
-    map.add(NodeLabels.KnightDies.ToString(), getKnightDiesSequence());
-    map.add(NodeLabels.OnPathWithItems.ToString(), getOnPathWithItemsSequence());
-    map.add(NodeLabels.GreatHallQueen.ToString(), getGreatHallQueenSequence());
-    map.add(NodeLabels.KnightSurvives.ToString(), getKnightSurvivesSequence());
-    map.add(NodeLabels.ArriveCity.ToString(), getArriveCitySequence());
-    map.add(NodeLabels.KnightTavern.ToString(), getKnightTavernSequence());
-    map.add(NodeLabels.KnightGivesItems.ToString(), getKnightGivesItemsSequence());
-    map.add(NodeLabels.ArriveCourtyard.ToString(), getArriveCourtyardSequence());
-    map.add(NodeLabels.WitchQuest.ToString(), getWitchQuestSequence());
-    map.add(NodeLabels.Knight2Proof.ToString(), getKnight2ProofSequence());
-    map.add(NodeLabels.Knight2LetsYouGo.ToString(), getKnight2LetsYouGoSequence());
-    map.add(NodeLabels.Knight2Escape.ToString(), getKnight2EscapeSequence());
-    map.add(NodeLabels.Knight2Battle.ToString(), getKnight2BattleSequence());
-    map.add(NodeLabels.ObtainProof2.ToString(), getObtainProof2Sequence());
-    map.add(NodeLabels.SpookyPath.ToString(), getSpookyPathSequence());
-    map.add(NodeLabels.BanditQuestions.ToString(), getBanditQuestionsSequence());
-    map.add(NodeLabels.BanditLovePotion.ToString(), getBanditLovePotionSequence());
-    map.add(NodeLabels.BanditRunsAway.ToString(), getBanditRunsAwaySequence());
-    map.add(NodeLabels.BanditGivesRing.ToString(), getBanditGivesRingSequence());
-    map.add(NodeLabels.WitchRiddle.ToString(), getWitchRiddleSequence());
-    map.add(NodeLabels.WitchDies.ToString(), getWitchDiesSequence());
-    map.add(NodeLabels.YouDie.ToString(), getYouDieSequence());
-    map.add(NodeLabels.ReturnCourtyard.ToString(), getReturnCourtyardSequence());
-    map.add(NodeLabels.KingdomCongrats.ToString(), getKingdomCongratsSequence());
-    map.add(NodeLabels.QueenLove.ToString(), getQueenLoveSequence());
-    map.add(NodeLabels.HappilyEverAfter.ToString(), getHappilyEverAfterSequence());
-    map.add(NodeLabels.QueenTellsYouLeave.ToString(), getQueenTellsYouLeaveSequence());
-    map.add(NodeLabels.KingProof.ToString(), getKingProofSequence());
-    map.add(NodeLabels.HeadKnight.ToString(), getHeadKnightSequence());
-    map.add(NodeLabels.Dungeon.ToString(), getDungeonSequence());
-    map.add(NodeLabels.NowPeasant.ToString(), getNowPeasantSequence());
+    map.add(NodeLabels.Init.toString(), getInitSequence());
+    map.add(NodeLabels.DyingKnightHelp.toString(), getDyingKnightHelpSequence());
+    map.add(NodeLabels.KnightDies.toString(), getKnightDiesSequence());
+    map.add(NodeLabels.OnPathWithItems.toString(), getOnPathWithItemsSequence());
+    map.add(NodeLabels.KnightSurvives.toString(), getKnightSurvivesSequence());
+    map.add(NodeLabels.ArriveCity.toString(), getArriveCitySequence());
+    map.add(NodeLabels.KnightTavern.toString(), getKnightTavernSequence());
+    map.add(NodeLabels.KnightGivesItems.toString(), getKnightGivesItemsSequence());
+    map.add(NodeLabels.ArriveCourtyard.toString(), getArriveCourtyardSequence());
+    map.add(NodeLabels.WitchQuest.toString(), getWitchQuestSequence());
+    map.add(NodeLabels.Knight2Proof.toString(), getKnight2ProofSequence());
+    map.add(NodeLabels.Knight2LetsYouGo.toString(), getKnight2LetsYouGoSequence());
+    map.add(NodeLabels.Knight2Escape.toString(), getKnight2EscapeSequence());
+    map.add(NodeLabels.Knight2Battle.toString(), getKnight2BattleSequence());
+    map.add(NodeLabels.ObtainProof2.toString(), getObtainProof2Sequence());
+    map.add(NodeLabels.SpookyPath.toString(), getSpookyPathSequence());
+    map.add(NodeLabels.BanditQuestions.toString(), getBanditQuestionsSequence());
+    map.add(NodeLabels.BanditLovePotion.toString(), getBanditLovePotionSequence());
+    map.add(NodeLabels.BanditRunsAway.toString(), getBanditRunsAwaySequence());
+    map.add(NodeLabels.WitchRiddle.toString(), getWitchRiddleSequence());
+    map.add(NodeLabels.WitchDies.toString(), getWitchDiesSequence());
+    map.add(NodeLabels.YouDie.toString(), getYouDieSequence());
+    map.add(NodeLabels.ReturnCourtyard.toString(), getReturnCourtyardSequence());
+    map.add(NodeLabels.KingdomCongrats.toString(), getKingdomCongratsSequence());
+    map.add(NodeLabels.QueenLove.toString(), getQueenLoveSequence());
+    map.add(NodeLabels.HappilyEverAfter.toString(), getHappilyEverAfterSequence());
+    map.add(NodeLabels.QueenTellsYouLeave.toString(), getQueenTellsYouLeaveSequence());
+    map.add(NodeLabels.KingProof.toString(), getKingProofSequence());
+    map.add(NodeLabels.HeadKnight.toString(), getHeadKnightSequence());
+    map.add(NodeLabels.Dungeon.toString(), getDungeonSequence());
+    map.add(NodeLabels.NowPeasant.toString(), getNowPeasantSequence());
 
     return map;
 	}
