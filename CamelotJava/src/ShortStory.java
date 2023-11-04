@@ -4,6 +4,7 @@ import com.storygraph.*;
 import com.entities.Character;
 import com.entities.Place;
 import com.entities.Things.ThingNames;
+import com.playerInput.*;
 import com.sequences.CharacterCreation;
 import com.entities.Item;
 
@@ -19,10 +20,57 @@ public class ShortStory implements IStory {
     public ShortStory() {
         getThings();
     }
-
+    private enum ChoiceLabels{
+    	Start,
+    	Give,
+    	Reject
+    }
+    
+    
+    
     @Override
     public INode getRoot() {
-        return new Node("root");
+
+    	var KnightTavern = new Node(NodeLabels.KnightTavern.toString());
+    	var KnightGivesItems = new Node(NodeLabels.KnightGivesItems.toString());
+    	var WitchQuest = new Node(NodeLabels.WitchQuest.toString());
+    	var Knight2Proof = new Node(NodeLabels.Knight2Proof.toString());
+    	var Knight2LetsYouGo = new Node(NodeLabels.Knight2LetsYouGo.toString());
+    	var Knight2Escape = new Node(NodeLabels.Knight2Escape.toString());
+    	var Knight2Battle = new Node(NodeLabels.Knight2Battle.toString());
+    	var ObtainProof2 = new Node(NodeLabels.ObtainProof2.toString());
+    	var SpookyPath = new Node(NodeLabels.SpookyPath.toString());
+    	var BanditQuestions = new Node(NodeLabels.BanditQuestions.toString());
+    	var BanditLovePotion = new Node(NodeLabels.BanditLovePotion.toString());
+    	var BanditRunsAway = new Node(NodeLabels.BanditRunsAway.toString());
+    	var BanditGivesRing = new Node(NodeLabels.BanditGivesRing.toString());
+    	var WitchRiddle = new Node(NodeLabels.WitchRiddle.toString());
+    	var WitchDies = new Node(NodeLabels.WitchDies.toString());
+    	var YouDie = new Node(NodeLabels.YouDie.toString());
+    	var ReturnCourtyard = new Node(NodeLabels.ReturnCourtyard.toString());
+    	var KingdomCongrats = new Node(NodeLabels.KingdomCongrats.toString());
+    	var QueenLove = new Node(NodeLabels.QueenLove.toString());
+    	var HappilyEverAfter = new Node(NodeLabels.HappilyEverAfter.toString());
+    	var QueenTellsYouLeave = new Node(NodeLabels.QueenTellsYouLeave.toString());
+    	var KingProof = new Node(NodeLabels.KingProof.toString());
+    	var HeadKnight = new Node(NodeLabels.HeadKnight.toString());
+    	var Dungeon = new Node(NodeLabels.Dungeon.toString());
+    	var NowPeasant = new Node(NodeLabels.NowPeasant.toString());
+    	var ArriveCourtyard = new Node(NodeLabels.ArriveCourtyard.toString());
+    	var ArriveCity = new Node(NodeLabels.ArriveCity.toString());
+    	var KnightSurvives = new Node(NodeLabels.KnightSurvives.toString());
+    	var GreatHallQueen = new Node(NodeLabels.GreatHallQueen.toString());
+    	var OnPathWithItems = new Node(NodeLabels.OnPathWithItems.toString());
+    	var KnightDies = new Node(NodeLabels.KnightDies.toString());
+    	var DyingKnightHelp = new Node(NodeLabels.DyingKnightHelp.toString());
+    	var Init = new Node(NodeLabels.Init.toString());
+    	
+
+        DyingKnightHelp.addChild(new SelectionChoice(ChoiceLabels.Give.toString()), KnightSurvives);
+        DyingKnightHelp.addChild(new SelectionChoice(ChoiceLabels.Reject.toString()), KnightDies);
+    	Init.addChild(new SelectionChoice(ChoiceLabels.Start.toString()),DyingKnightHelp);
+		
+    	return Init;
     }
 
     @Override
