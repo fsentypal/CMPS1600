@@ -21,7 +21,6 @@ public class ShortStory implements IStory {
         getThings();
     }
     private enum ChoiceLabels{
-    	Start,
     	Give,
     	Reject,
     	TakeStuff,
@@ -46,39 +45,52 @@ public class ShortStory implements IStory {
     	LeaveBandit2,
     	RiddleAnswer1,
     	RiddleAnswer2,
-    	ReturnHome
+    	ReturnHome,
+    	ChooseQueen,
+    	GiveRing,
+    	DontGiveRing,
+    	TalkKing,
+    	ShowProof1,
+    	ShowProof2,
+    	Lie,
+    	ChooseKing
     }
     
     
     
     @Override
     public INode getRoot() {
-   	
+    	var HeadKnight = new Node(NodeLabels.HeadKnight.toString());
+    	
     	var Dungeon = new Node(NodeLabels.Dungeon.toString());
      	
     	var NowPeasant = new Node(NodeLabels.NowPeasant.toString());
     	
     	var HappilyEverAfter = new Node(NodeLabels.HappilyEverAfter.toString());
     	
-    	var QueenLove = new Node(NodeLabels.QueenLove.toString());
-    	
-    	var HeadKnight = new Node(NodeLabels.HeadKnight.toString());
+    	var YouDie = new Node(NodeLabels.YouDie.toString());
     	
     	var KingProof = new Node(NodeLabels.KingProof.toString());
-    	
+    	KingProof.addChild(new ActionChoice(ChoiceLabels.ShowProof1.toString(),king, ActionChoice.Icons.openscroll, "Show the King the proof you took from the first knight", true), HeadKnight);
+    	KingProof.addChild(new ActionChoice(ChoiceLabels.ShowProof2.toString(),king, ActionChoice.Icons.scroll, "Show the King the proof you got from the second knight", true), Dungeon);
+    	KingProof.addChild(new ActionChoice(ChoiceLabels.Lie.toString(),king, ActionChoice.Icons.snake, "Lie to the King about your status as a knight", true), NowPeasant);
+
     	var QueenTellsYouLeave = new Node(NodeLabels.QueenTellsYouLeave.toString());
+    	QueenTellsYouLeave.addChild(new ActionChoice(ChoiceLabels.TalkKing.toString(),king, ActionChoice.Icons.openscroll, "See what the King has to say to you", true), KingProof);    	   	
+    	
+    	var QueenLove = new Node(NodeLabels.QueenLove.toString());
+    	QueenLove.addChild(new ActionChoice(ChoiceLabels.GiveRing.toString(),queen, ActionChoice.Icons.ring, "Propose to the Queen to run away with you", true), HappilyEverAfter);
+    	QueenLove.addChild(new ActionChoice(ChoiceLabels.DontGiveRing.toString(),queen, ActionChoice.Icons.brokenheart, "Reject the Queens love", true), QueenTellsYouLeave);
     	
     	var KingdomCongrats = new Node(NodeLabels.KingdomCongrats.toString());
-    	
+    	KingdomCongrats.addChild(new ActionChoice(ChoiceLabels.ChooseQueen.toString(),queen, ActionChoice.Icons.talk, "See what the Queen has for you", true), QueenLove);
+    	KingdomCongrats.addChild(new ActionChoice(ChoiceLabels.ChooseKing.toString(),king, ActionChoice.Icons.talk, "See what the King has for you", true), KingProof);
     	
     	var ReturnCourtyard = new Node(NodeLabels.ReturnCourtyard.toString());
-    	ReturnCourtyard.addChild(new ActionChoice(ChoiceLabels.ReturnHome.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "You have defeated the witch, time to return to the castle", true), KingdomCongrats);
+    	ReturnCourtyard.addChild(new ActionChoice(ChoiceLabels.ReturnHome.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "Go past the courtyard and return to the castle", true), KingdomCongrats);
     	
     	var WitchDies = new Node(NodeLabels.WitchDies.toString());
     	WitchDies.addChild(new ActionChoice(ChoiceLabels.ReturnHome.toString(),ruins.getFurniture("Exit"),ActionChoice.Icons.exit, "You have defeated the witch, time to return to the castle", true), ReturnCourtyard);   	
-
-    	
-    	var YouDie = new Node(NodeLabels.YouDie.toString());
     	
     	var WitchRiddle = new Node(NodeLabels.WitchRiddle.toString());
     	WitchRiddle.addChild(new ActionChoice(ChoiceLabels.RiddleAnswer1.toString(),witch, ActionChoice.Icons.talk, "Answer Choice 1", true), WitchDies);
@@ -113,18 +125,15 @@ public class ShortStory implements IStory {
     	Knight2Proof.addChild(new ActionChoice(ChoiceLabels.AttackGuard.toString(),knight2,ActionChoice.Icons.swords, "Try to kill the guard", true), Knight2Battle);
     	Knight2Proof.addChild(new ActionChoice(ChoiceLabels.RunAway.toString(),knight2,ActionChoice.Icons.boot, "Run away from the question", true), Knight2Escape);		
     	Knight2Proof.addChild(new ActionChoice(ChoiceLabels.GiveProof.toString(),knight2,ActionChoice.Icons.openscroll, "Give the guard your openscroll if you have it", true), Knight2LetsYouGo);	
-
     	
     	var ArriveCourtyard = new Node(NodeLabels.ArriveCourtyard.toString());
     	ArriveCourtyard.addChild(new ActionChoice(ChoiceLabels.TalktoKnight2.toString(),knight2,ActionChoice.Icons.talk, "Talk to the guard to make sure everyhting is ok", true), Knight2Proof);	
 
     	var WitchQuest = new Node(NodeLabels.WitchQuest.toString());
     	WitchQuest.addChild(new ActionChoice(ChoiceLabels.LeaveHall.toString(),greatHall.getFurniture("LeftDoor"),ActionChoice.Icons.door, "Leave the great hall to find the witch", true), ArriveCourtyard);
-
     	
     	var KnightGivesItems = new Node(NodeLabels.KnightGivesItems.toString());
-    	KnightGivesItems.addChild(new ActionChoice(ChoiceLabels.LeaveTavern.toString(),tavern.getFurniture("Door"),ActionChoice.Icons.exit, "Leave the tavern to meet the Queen", true),WitchQuest);   	
-    	 	
+    	KnightGivesItems.addChild(new ActionChoice(ChoiceLabels.LeaveTavern.toString(),tavern.getFurniture("Door"),ActionChoice.Icons.exit, "Leave the tavern to meet the Queen", true),WitchQuest);   	   	 	
 
     	var KnightTavern = new Node(NodeLabels.KnightTavern.toString());
     	KnightTavern.addChild(new ActionChoice(ChoiceLabels.TakeGifts.toString(),knight1,ActionChoice.Icons.chest, "Accept gifts from the knight for your journey", true),KnightGivesItems);
@@ -146,8 +155,7 @@ public class ShortStory implements IStory {
     	DyingKnightHelp.addChild(new SelectionChoice(ChoiceLabels.Give.toString()), KnightSurvives);
     	
     	var Init = new Node(NodeLabels.Init.toString());
-    	Init.addChild(new SelectionChoice(ChoiceLabels.Start.toString()),DyingKnightHelp);
-    	
+    	Init.addChild(new SelectionChoice("Start"), DyingKnightHelp);    	
 		
     	return Init;
     }
@@ -451,10 +459,6 @@ private ActionSequence getQueenTellsYouLeaveSequence() {
 	sequence.add(new Exit(player, castleBedroom.getFurniture("Door"), true));
 	sequence.add(new Position(king, greatHall));
 	sequence.add(new Position(player, greatHall));
-	sequence.add(new SetDialog("Will you show me your knight proof?"));
-	sequence.add(new ShowDialog());
-	sequence.add(new Wait(2));
-	sequence.add(new HideDialog());
 	return sequence;
 }
 private ActionSequence getKingProofSequence() {
