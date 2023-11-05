@@ -50,67 +50,95 @@ public class ShortStory implements IStory {
     
     @Override
     public INode getRoot() {
+   	
+    	var Dungeon = new Node(NodeLabels.Dungeon.toString());
+     	
+    	var NowPeasant = new Node(NodeLabels.NowPeasant.toString());
+    	
+    	var HappilyEverAfter = new Node(NodeLabels.HappilyEverAfter.toString());
+    	
+    	var QueenLove = new Node(NodeLabels.QueenLove.toString());
+    	
+    	var HeadKnight = new Node(NodeLabels.HeadKnight.toString());
+    	
+    	var KingProof = new Node(NodeLabels.KingProof.toString());
+    	
+    	var QueenTellsYouLeave = new Node(NodeLabels.QueenTellsYouLeave.toString());
+    	
+    	var KingdomCongrats = new Node(NodeLabels.KingdomCongrats.toString());
+    	
+    	var ReturnCourtyard = new Node(NodeLabels.ReturnCourtyard.toString());
+    	
+    	var WitchDies = new Node(NodeLabels.WitchDies.toString());
+    	
+    	var YouDie = new Node(NodeLabels.YouDie.toString());
+    	
+    	var WitchRiddle = new Node(NodeLabels.WitchRiddle.toString());
+    	
+    	var SpookyPath = new Node(NodeLabels.SpookyPath.toString());
+    	SpookyPath.addChild(new ActionChoice(ChoiceLabels.LeavePath.toString(),spookyPath.getFurniture("EastEnd"),ActionChoice.Icons.exit, "Look somewhere else for the witch, she isn't in the spooky path or forest", true), WitchRiddle);   	
+
+    	var ObtainProof2 = new Node(NodeLabels.ObtainProof2.toString());
+    	ObtainProof2.addChild(new ActionChoice(ChoiceLabels.LeaveCourtyard1.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "Leave the guard and continue to the witch", true), SpookyPath); 
+    	
+    	var BanditLovePotion = new Node(NodeLabels.BanditLovePotion.toString());
+    	BanditLovePotion.addChild(new ActionChoice(ChoiceLabels.LeaveBandit1.toString(),spookyPath.getFurniture("EastEnd"),ActionChoice.Icons.exit, "Thank the bandit for the ring and continue finding the witch", true), WitchRiddle);
+    	
+    	var BanditRunsAway = new Node(NodeLabels.BanditRunsAway.toString());
+    	BanditRunsAway.addChild(new ActionChoice(ChoiceLabels.LeaveBandit2.toString(),spookyPath.getFurniture("EastEnd"),ActionChoice.Icons.exit, "Continue searching for the witch", true), WitchRiddle);
+    	
+    	var BanditQuestions = new Node(NodeLabels.BanditQuestions.toString());
+    	BanditQuestions.addChild(new ActionChoice(ChoiceLabels.AttackBandit.toString(),bandit,ActionChoice.Icons.swords, "Attack the bandit", true), BanditRunsAway);
+    	BanditQuestions.addChild(new ActionChoice(ChoiceLabels.GivePotion.toString(),bandit,ActionChoice.Icons.lovepotion, "Try to seduce the bandit", true), BanditLovePotion);
+    	
+    	var Knight2LetsYouGo = new Node(NodeLabels.Knight2LetsYouGo.toString());
+    	Knight2LetsYouGo.addChild(new ActionChoice(ChoiceLabels.LeaveCourtyard3.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "Continue to search for the witch", true), BanditQuestions);   
+
+    	var Knight2Escape = new Node(NodeLabels.Knight2Escape.toString());
+    	Knight2Escape.addChild(new ActionChoice(ChoiceLabels.LeaveCourtyard2.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "Continue to search for the witch", true), SpookyPath);   
+
+    	var Knight2Battle = new Node(NodeLabels.Knight2Battle.toString());
+    	Knight2Battle.addChild(new ActionChoice(ChoiceLabels.PickUpScroll.toString(),knight2,ActionChoice.Icons.scroll, "Pick up the scroll off the guards body", true), ObtainProof2);	
+    	
+    	var Knight2Proof = new Node(NodeLabels.Knight2Proof.toString());
+    	Knight2Proof.addChild(new ActionChoice(ChoiceLabels.AttackGuard.toString(),knight2,ActionChoice.Icons.swords, "Try to kill the guard", true), Knight2Battle);
+    	Knight2Proof.addChild(new ActionChoice(ChoiceLabels.RunAway.toString(),knight2,ActionChoice.Icons.boot, "Run away from the question", true), Knight2Escape);		
+    	Knight2Proof.addChild(new ActionChoice(ChoiceLabels.GiveProof.toString(),knight2,ActionChoice.Icons.openscroll, "Give the guard your openscroll if you have it", true), Knight2LetsYouGo);	
+
+    	
+    	var ArriveCourtyard = new Node(NodeLabels.ArriveCourtyard.toString());
+    	ArriveCourtyard.addChild(new ActionChoice(ChoiceLabels.TalktoKnight2.toString(),knight2,ActionChoice.Icons.talk, "Talk to the guard to make sure everyhting is ok", true), Knight2Proof);	
+
+    	var WitchQuest = new Node(NodeLabels.WitchQuest.toString());
+    	WitchQuest.addChild(new ActionChoice(ChoiceLabels.LeaveHall.toString(),greatHall.getFurniture("LeftDoor"),ActionChoice.Icons.door, "Leave the great hall to find the witch", true), ArriveCourtyard);
+
+    	
+    	var KnightGivesItems = new Node(NodeLabels.KnightGivesItems.toString());
+    	KnightGivesItems.addChild(new ActionChoice(ChoiceLabels.LeaveTavern.toString(),tavern.getFurniture("Door"),ActionChoice.Icons.exit, "Leave the tavern to meet the Queen", true),WitchQuest);   	
+    	 	
 
     	var KnightTavern = new Node(NodeLabels.KnightTavern.toString());
-    	var KnightGivesItems = new Node(NodeLabels.KnightGivesItems.toString());
-    	var WitchQuest = new Node(NodeLabels.WitchQuest.toString());
-    	var Knight2Proof = new Node(NodeLabels.Knight2Proof.toString());
-    	var Knight2LetsYouGo = new Node(NodeLabels.Knight2LetsYouGo.toString());
-    	var Knight2Escape = new Node(NodeLabels.Knight2Escape.toString());
-    	var Knight2Battle = new Node(NodeLabels.Knight2Battle.toString());
-    	var ObtainProof2 = new Node(NodeLabels.ObtainProof2.toString());
-    	var SpookyPath = new Node(NodeLabels.SpookyPath.toString());
-    	var BanditQuestions = new Node(NodeLabels.BanditQuestions.toString());
-    	var BanditLovePotion = new Node(NodeLabels.BanditLovePotion.toString());
-    	var BanditRunsAway = new Node(NodeLabels.BanditRunsAway.toString());
-    	var WitchRiddle = new Node(NodeLabels.WitchRiddle.toString());
-    	var WitchDies = new Node(NodeLabels.WitchDies.toString());
-    	var YouDie = new Node(NodeLabels.YouDie.toString());
-    	var ReturnCourtyard = new Node(NodeLabels.ReturnCourtyard.toString());
-    	var KingdomCongrats = new Node(NodeLabels.KingdomCongrats.toString());
-    	var QueenLove = new Node(NodeLabels.QueenLove.toString());
-    	var HappilyEverAfter = new Node(NodeLabels.HappilyEverAfter.toString());
-    	var QueenTellsYouLeave = new Node(NodeLabels.QueenTellsYouLeave.toString());
-    	var KingProof = new Node(NodeLabels.KingProof.toString());
-    	var HeadKnight = new Node(NodeLabels.HeadKnight.toString());
-    	var Dungeon = new Node(NodeLabels.Dungeon.toString());
-    	var NowPeasant = new Node(NodeLabels.NowPeasant.toString());
-    	var ArriveCourtyard = new Node(NodeLabels.ArriveCourtyard.toString());
+    	KnightTavern.addChild(new ActionChoice(ChoiceLabels.TakeGifts.toString(),knight1,ActionChoice.Icons.chest, "Accept gifts from the knight for your journey", true),KnightGivesItems);
+
     	var ArriveCity = new Node(NodeLabels.ArriveCity.toString());
+    	ArriveCity.addChild(new ActionChoice(ChoiceLabels.LeaveCity.toString(),forestPath.getFurniture("WestEnd"),ActionChoice.Icons.exit, "Leave to the tavern and meet with the knight", true), KnightTavern);  
+    	
     	var KnightSurvives = new Node(NodeLabels.KnightSurvives.toString());
+    	KnightSurvives.addChild(new ActionChoice(ChoiceLabels.LeavePath2.toString(),forestPath.getFurniture("WestEnd"),ActionChoice.Icons.exit, "Leave to the city", true), ArriveCity);   	
+
     	var OnPathWithItems = new Node(NodeLabels.OnPathWithItems.toString());
+    	OnPathWithItems.addChild(new ActionChoice(ChoiceLabels.LeavePath1.toString(),forestPath.getFurniture("WestEnd"),ActionChoice.Icons.exit, "Leave the forest path to meet the Queen", true),WitchQuest);
+
     	var KnightDies = new Node(NodeLabels.KnightDies.toString());
+    	KnightDies.addChild(new ActionChoice(ChoiceLabels.TakeStuff.toString(),knight1,ActionChoice.Icons.hand, "Take the knights armor and sword", true),OnPathWithItems);
+
     	var DyingKnightHelp = new Node(NodeLabels.DyingKnightHelp.toString());
+    	DyingKnightHelp.addChild(new SelectionChoice(ChoiceLabels.Reject.toString()), KnightDies);
+    	DyingKnightHelp.addChild(new SelectionChoice(ChoiceLabels.Give.toString()), KnightSurvives);
+    	
     	var Init = new Node(NodeLabels.Init.toString());
-
+    	Init.addChild(new SelectionChoice(ChoiceLabels.Start.toString()),DyingKnightHelp);
     	
-    	
-    	
-
-    	
-BanditRunsAway.addChild(new ActionChoice(ChoiceLabels.LeaveBandit2.toString(),spookyPath.getFurniture("EastEnd"),ActionChoice.Icons.exit, "Continue searching for the witch", true), WitchRiddle);
-BanditQuestions.addChild(new ActionChoice(ChoiceLabels.AttackBandit.toString(),bandit,ActionChoice.Icons.swords, "Attack the bandit", true), BanditRunsAway);
-BanditLovePotion.addChild(new ActionChoice(ChoiceLabels.LeaveBandit1.toString(),spookyPath.getFurniture("EastEnd"),ActionChoice.Icons.exit, "Thank the bandit for the ring and continue finding the witch", true), WitchRiddle);
-BanditQuestions.addChild(new ActionChoice(ChoiceLabels.GivePotion.toString(),bandit,ActionChoice.Icons.lovepotion, "Try to seduce the bandit", true), BanditLovePotion);
-Knight2LetsYouGo.addChild(new ActionChoice(ChoiceLabels.LeaveCourtyard3.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "Continue to search for the witch", true), BanditQuestions);   
-Knight2Escape.addChild(new ActionChoice(ChoiceLabels.LeaveCourtyard2.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "Continue to search for the witch", true), SpookyPath);   
-SpookyPath.addChild(new ActionChoice(ChoiceLabels.LeavePath.toString(),spookyPath.getFurniture("EastEnd"),ActionChoice.Icons.exit, "Look somewhere else for the witch, she isn't in the spooky path or forest", true), WitchRiddle);   	
-ObtainProof2.addChild(new ActionChoice(ChoiceLabels.LeaveCourtyard1.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "Leave the guard and continue to the witch", true), SpookyPath);   	
-Knight2Battle.addChild(new ActionChoice(ChoiceLabels.PickUpScroll.toString(),knight2,ActionChoice.Icons.scroll, "Pick up the scroll off the guards body", true), ObtainProof2);	
-Knight2Proof.addChild(new ActionChoice(ChoiceLabels.AttackGuard.toString(),knight2,ActionChoice.Icons.swords, "Try to kill the guard", true), Knight2Battle);
-Knight2Proof.addChild(new ActionChoice(ChoiceLabels.RunAway.toString(),knight2,ActionChoice.Icons.boot, "Run away from the question", true), Knight2Escape);		
-Knight2Proof.addChild(new ActionChoice(ChoiceLabels.GiveProof.toString(),knight2,ActionChoice.Icons.openscroll, "Give the guard your openscroll if you have it", true), Knight2LetsYouGo);	
-ArriveCourtyard.addChild(new ActionChoice(ChoiceLabels.TalktoKnight2.toString(),knight2,ActionChoice.Icons.talk, "Talk to the guard to make sure everyhting is ok", true), Knight2Proof);	
-WitchQuest.addChild(new ActionChoice(ChoiceLabels.LeaveHall.toString(),greatHall.getFurniture("LeftDoor"),ActionChoice.Icons.door, "Leave the great hall to find the witch", true), ArriveCourtyard);
-KnightGivesItems.addChild(new ActionChoice(ChoiceLabels.LeaveTavern.toString(),tavern.getFurniture("Door"),ActionChoice.Icons.exit, "Leave the tavern to meet the Queen", true),WitchQuest);   	
-KnightTavern.addChild(new ActionChoice(ChoiceLabels.TakeGifts.toString(),knight1,ActionChoice.Icons.chest, "Accept gifts from the knight for your journey", true),KnightGivesItems);
-ArriveCity.addChild(new ActionChoice(ChoiceLabels.LeaveCity.toString(),forestPath.getFurniture("WestEnd"),ActionChoice.Icons.exit, "Leave to the tavern and meet with the knight", true), KnightTavern);   	
-KnightSurvives.addChild(new ActionChoice(ChoiceLabels.LeavePath2.toString(),forestPath.getFurniture("WestEnd"),ActionChoice.Icons.exit, "Leave to the city", true), ArriveCity);   	
-DyingKnightHelp.addChild(new SelectionChoice(ChoiceLabels.Give.toString()), KnightSurvives);
-OnPathWithItems.addChild(new ActionChoice(ChoiceLabels.LeavePath1.toString(),forestPath.getFurniture("WestEnd"),ActionChoice.Icons.exit, "Leave the forest path to meet the Queen", true),WitchQuest);
-KnightDies.addChild(new ActionChoice(ChoiceLabels.TakeStuff.toString(),knight1,ActionChoice.Icons.hand, "Take the knights armor and sword", true),OnPathWithItems);
-DyingKnightHelp.addChild(new SelectionChoice(ChoiceLabels.Reject.toString()), KnightDies);
-Init.addChild(new SelectionChoice(ChoiceLabels.Start.toString()),DyingKnightHelp);
 		
     	return Init;
     }
