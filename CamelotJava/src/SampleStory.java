@@ -62,14 +62,7 @@ public class SampleStory implements IStory{
 				true)
 			, takeSwordNode);
 		
-		startNode.addChild(
-			new ActionChoice(
-					ActionNames.Exit.toString(),
-					home.getFurniture("Door"),
-					Icons.door,
-					"Leave house",
-					true),
-			exitHomeNode);
+startNode.addChild(new ActionChoice(ActionNames.Exit.toString(), home.getFurniture("Door"), Icons.door, "Leave house",true),exitHomeNode);
 		
 		
 		var root = new Node(NodeLabels.Init.toString());
