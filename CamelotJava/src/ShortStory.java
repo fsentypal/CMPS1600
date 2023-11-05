@@ -43,7 +43,10 @@ public class ShortStory implements IStory {
     	GivePotion,
     	LeaveBandit1,
     	AttackBandit,
-    	LeaveBandit2
+    	LeaveBandit2,
+    	RiddleAnswer1,
+    	RiddleAnswer2,
+    	ReturnHome
     }
     
     
@@ -67,14 +70,20 @@ public class ShortStory implements IStory {
     	
     	var KingdomCongrats = new Node(NodeLabels.KingdomCongrats.toString());
     	
+    	
     	var ReturnCourtyard = new Node(NodeLabels.ReturnCourtyard.toString());
+    	ReturnCourtyard.addChild(new ActionChoice(ChoiceLabels.ReturnHome.toString(),courtyard.getFurniture("Exit"),ActionChoice.Icons.exit, "You have defeated the witch, time to return to the castle", true), KingdomCongrats);
     	
     	var WitchDies = new Node(NodeLabels.WitchDies.toString());
+    	WitchDies.addChild(new ActionChoice(ChoiceLabels.ReturnHome.toString(),ruins.getFurniture("Exit"),ActionChoice.Icons.exit, "You have defeated the witch, time to return to the castle", true), ReturnCourtyard);   	
+
     	
     	var YouDie = new Node(NodeLabels.YouDie.toString());
     	
     	var WitchRiddle = new Node(NodeLabels.WitchRiddle.toString());
-    	
+    	WitchRiddle.addChild(new ActionChoice(ChoiceLabels.RiddleAnswer1.toString(),witch, ActionChoice.Icons.talk, "Answer Choice 1", true), WitchDies);
+    	WitchRiddle.addChild(new ActionChoice(ChoiceLabels.RiddleAnswer2.toString(), witch, ActionChoice.Icons.talk, "Answer Choice 2", true), YouDie);
+    
     	var SpookyPath = new Node(NodeLabels.SpookyPath.toString());
     	SpookyPath.addChild(new ActionChoice(ChoiceLabels.LeavePath.toString(),spookyPath.getFurniture("EastEnd"),ActionChoice.Icons.exit, "Look somewhere else for the witch, she isn't in the spooky path or forest", true), WitchRiddle);   	
 
@@ -422,7 +431,7 @@ private ActionSequence getHappilyEverAfterSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new Give(player, ring, queen));
 	sequence.add(new RemoveFromList(ring));
-	sequence.add(new SetDialog("You won Happily Ever After"));
+	sequence.add(new SetDialog("You won! Happily Ever After"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(5));
 	sequence.add(new HideDialog());
@@ -431,7 +440,7 @@ private ActionSequence getHappilyEverAfterSequence() {
 }
 private ActionSequence getQueenTellsYouLeaveSequence() {
 	var sequence = new ActionSequence();
-	sequence.add(new SetDialog("I dont love you sorry"));
+	sequence.add(new SetDialog("I dont love you, sorry"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(2));
 	sequence.add(new HideDialog());
@@ -442,7 +451,7 @@ private ActionSequence getQueenTellsYouLeaveSequence() {
 	sequence.add(new Exit(player, castleBedroom.getFurniture("Door"), true));
 	sequence.add(new Position(king, greatHall));
 	sequence.add(new Position(player, greatHall));
-	sequence.add(new SetDialog("Will you show me your knight proof"));
+	sequence.add(new SetDialog("Will you show me your knight proof?"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(2));
 	sequence.add(new HideDialog());
@@ -452,7 +461,7 @@ private ActionSequence getKingProofSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new Position(king, greatHall));
 	sequence.add(new Position(player, greatHall));
-	sequence.add(new SetDialog("Will you show me your knight proof"));
+	sequence.add(new SetDialog("Will you show me your knight proof?"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(2));
 	sequence.add(new HideDialog());
@@ -462,11 +471,11 @@ private ActionSequence getHeadKnightSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new Give(player, openScroll, king));
 	sequence.add(new RemoveFromList(openScroll));
-	sequence.add(new SetDialog("You are a knight I am promoting you to head knight"));
+	sequence.add(new SetDialog("You are a knight! I am promoting you to head knight"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(5));
 	sequence.add(new HideDialog());
-	sequence.add(new SetDialog("You got the second best option Semi Happily Ever After"));
+	sequence.add(new SetDialog("You got the second best option! Semi Happily Ever After"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(5));
 	sequence.add(new HideDialog());
@@ -477,14 +486,14 @@ private ActionSequence getDungeonSequence() {
 	var sequence = new ActionSequence();
 	sequence.add(new Give(player, scroll, king));
 	sequence.add(new RemoveFromList(scroll));
-	sequence.add(new SetDialog("Imposter Murderer This is not you"));
+	sequence.add(new SetDialog("Imposter! Murderer! This is not you!"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(3));
 	sequence.add(new HideDialog());
 	sequence.add(new Exit(player, greatHall.getFurniture("BasementDoor"), true));
 	sequence.add(new Create<Place>(dungeon));
 	sequence.add(new Position(player, dungeon));
-	sequence.add(new SetDialog("You got the worst option Sadly Ever After"));
+	sequence.add(new SetDialog("You got the worst ending. Sadly Ever After"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(5));
 	sequence.add(new HideDialog());
@@ -498,14 +507,14 @@ private ActionSequence getNowPeasantSequence() {
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(2));
 	sequence.add(new HideDialog());
-	sequence.add(new SetDialog("No youre not and it seems you dont have proof We are taking your stuff but you can keep the gold from your journey"));
+	sequence.add(new SetDialog("No youre not and it seems you dont have proof! We are taking your stuff but you can keep the gold from your journey"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(8));
 	sequence.add(new HideDialog());
 	sequence.add(new Create<Item>(coin));
 	sequence.add(new Give(king, coin, player));
 	sequence.add(new AddToList(coin));
-	sequence.add(new SetDialog("You got the second worst option Mediocrely Ever After"));
+	sequence.add(new SetDialog("You got the second worst ending. Mediocrely Ever After"));
 	sequence.add(new ShowDialog());
 	sequence.add(new Wait(5));
 	sequence.add(new HideDialog());
