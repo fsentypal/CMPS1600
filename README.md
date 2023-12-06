@@ -1,3 +1,6 @@
+Video Playthrough #1: https://www.youtube.com/watch?v=uZtYO8uOkJc&ab_channel=FilipSentypal
+Video Playthrough #2: https://www.youtube.com/watch?v=XW8nx37EOR8&ab_channel=FilipSentypal
+
 # Camelot_The_Lost_Queen
 Overview:
 "Quest for the Lost Queen" is an immersive, story-driven game developed on Unity using Camelot, and incorporates Java for gameplay logic. In this narrative, a lost queen longs to be found, promising a grand prize to her savior. The game offers a brief yet captivating experience with approximately 4 minutes of gameplay and 4 distinct endings, determined by the player's responses to various riddles.
